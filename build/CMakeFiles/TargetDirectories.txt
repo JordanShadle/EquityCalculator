@@ -1,0 +1,3 @@
+/Users/jordanshadle/Desktop/Software/EquityCalculator/EquityCalculator/build/CMakeFiles/equity_calculator.dir
+/Users/jordanshadle/Desktop/Software/EquityCalculator/EquityCalculator/build/CMakeFiles/edit_cache.dir
+/Users/jordanshadle/Desktop/Software/EquityCalculator/EquityCalculator/build/CMakeFiles/rebuild_cache.dir
