@@ -15,27 +15,45 @@ int main(int argc, const char * argv[]) {
     baseDeck.init();
     
     int numPlayers{};
-    std::cout << "Enter number of players: ";
-    std::cin >> numPlayers;
-    if (numPlayers <= 1 || numPlayers > RESULT_SIZE)
+    while (1)
     {
-        throw std::invalid_argument(
-            "Number of players must be 2 through RESULT_SIZE");
+        std::cout << "Enter number of players: ";
+        if (std::cin >> numPlayers)
+        {
+            if (numPlayers >= 2 && numPlayers <= 9)
+            {
+                break;
+            }
+            else
+            {
+                std::cout << "Number of players must be 2 through 9\n"
+                << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "Please enter a valid integer (2-9)\n";
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+        }
     }
     
     std::vector<std::vector<Card>> playerList(numPlayers);
     baseDeck.getHoleCards(playerList);
+    
     Deck t1Deck = baseDeck;
+    t1Deck.reseed();
     Deck t2Deck = baseDeck;
+    t2Deck.reseed();
 
-    std::array<float, RESULT_SIZE> t1Results{};
+    std::vector<float> t1Results(playerList.size());
     std::thread t1{
         results,
         t1Deck,
         std::cref(playerList),
         std::ref(t1Results)};
     
-    std::array<float, RESULT_SIZE> t2Results{};
+    std::vector<float> t2Results(playerList.size());
     std::thread t2{
         results,
         t2Deck,
@@ -45,8 +63,8 @@ int main(int argc, const char * argv[]) {
     t1.join();
     t2.join();
     
-    std::array<float, RESULT_SIZE> mergedResults{};
-    for (std::size_t i{}; i < RESULT_SIZE; ++i)
+    std::vector<float> mergedResults(playerList.size());
+    for (std::size_t i{}; i < playerList.size(); ++i)
     {
         mergedResults[i] = t1Results[i] + t2Results[i];
     }

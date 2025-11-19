@@ -43,37 +43,70 @@ void Deck::getHoleCards(std::vector<std::vector<Card>>& playerList)
     const std::size_t cardCount = playerList.size() * 2;
     Card currentCard{};
     char currentChar;
-    int cardIndex{};
-    std::vector<int> indicesList;
-    indicesList.reserve(cardCount);
+    std::vector<int> indexList;
+    indexList.reserve(cardCount);
     
-    std::cout << "Enter cards: ";
-    
-    for (size_t i{}; i < cardCount; ++i)
+    while(1)
     {
-        std::cin >> currentCard.rank;
-        std::cin >> currentChar;
-        currentCard.suit = charToSuit(currentChar);
-        
-        cardIndex = (currentCard.rank - 2) +
-        (static_cast<int>(currentCard.suit) * 13);
-        
-        for (int index : indicesList)
+        bool validInput = true;
+        for (auto& player : playerList)
         {
-            if (currentCard.rank == cards[index].rank &&
-                currentCard.suit == cards[index].suit)
-            {
-                throw std::invalid_argument("Duplicate hole cards not allowed");
-            }
+            player.clear();
         }
-        indicesList.push_back(cardIndex);
+        indexList.clear();
+        std::cout << "Enter cards: ";
 
+        for (size_t i{}; i < cardCount; ++i)
+        {
+            std::cin >> currentChar;
+            currentCard.rank = charToRank(currentChar);
+            
+            if (currentCard.rank == 0)
+            {
+                std::cout << "Invalid rank\n";
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                validInput = false;
+                break;
+            }
+            
+            std::cin >> currentChar;
+            currentCard.suit = charToSuit(currentChar);
+            
+            if (currentCard.suit == Suit::invalid_suit)
+            {
+                std::cout << "Invalid suit\n";
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                validInput = false;
+                break;
+            }
+            
+            int cardIndex = (currentCard.rank - 2) +
+            (static_cast<int>(currentCard.suit) * 13);
+            
+            if (std::find(indexList.begin(), indexList.end(), cardIndex)
+                != indexList.end())
+            {
+                std::cout << "Duplicate hole cards not allowed";
+                std::cin.clear();
+                std::cin.ignore(10000, '\n');
+                validInput = false;
+                break;
+            }
+            
+            indexList.push_back(cardIndex);
+            playerList[i/2].push_back(currentCard);
+        }
         
-        playerList[i/2].push_back(currentCard);
+        if (validInput)
+        {
+            break;
+        }
     }
     
-    std::sort(indicesList.begin(), indicesList.end(), std::greater<int>());
-    for (int index : indicesList)
+    std::sort(indexList.begin(), indexList.end(), std::greater<int>());
+    for (int index : indexList)
     {
         cards.erase(cards.begin() + index);
     }

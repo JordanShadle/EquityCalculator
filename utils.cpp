@@ -10,8 +10,9 @@ char suitToChar(Suit suit)
         case Suit::d: return 'd';
         case Suit::h: return 'h';
         case Suit::s: return 's';
+        default:
+            return '?';
     }
-    return '?';
 }
 
 Suit charToSuit(char suit)
@@ -23,7 +24,7 @@ Suit charToSuit(char suit)
         case 'h': return Suit::h;
         case 's': return Suit::s;
         default:
-            throw std::invalid_argument("Invalid suit");
+            return Suit::invalid_suit;
     }
 }
 
@@ -44,9 +45,34 @@ char rankToChar(int rank)
     return '?';
 }
 
+int charToRank(char rank)
+{
+    switch (rank)
+    {
+        case 'A':
+            return 14;
+        case 'K':
+            return 13;
+        case 'Q':
+            return 12;
+        case 'J':
+            return 11;
+        case 'T':
+            return 10;
+            break;
+        default:
+            if (rank >= 2 && rank <= 9)
+            {
+                return rank - '0';
+            }
+    }
+    return 0;
+}
+
 std::string rankToType(int rank)
 {
-    switch (rank) {
+    switch (rank)
+    {
         case 0: return "High Card";
         case 1: return "Pair";
         case 2: return "Two Pair";

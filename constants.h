@@ -8,7 +8,6 @@ constexpr int PAIR_COUNT = 2;
 constexpr int STRAIGHT_LEN = 5;
 constexpr int TRIALS = 50000;
 constexpr int BOARD_SIZE = 5;
-constexpr int RESULT_SIZE = 9;
 constexpr int THREAD_COUNT = 2;
 
 enum class HandType

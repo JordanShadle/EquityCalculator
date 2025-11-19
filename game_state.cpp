@@ -25,7 +25,7 @@ void printGame(const std::vector<std::vector<Card>>& playerList,
     std::cout << std::endl;
 }
 
-void calculateEquity(std::array<float, RESULT_SIZE> winCount)
+void calculateEquity(const std::vector<float>& winCount)
 {
     for (int i{}; i < winCount.size(); ++i)
     {
@@ -39,7 +39,7 @@ void calculateEquity(std::array<float, RESULT_SIZE> winCount)
 
 void results(Deck deck,
              const std::vector<std::vector<Card>>& playerList,
-             std::array<float, RESULT_SIZE>& threadResults)
+             std::vector<float>& threadResults)
 {
     std::vector<HandValue> playerValues{};
     playerValues.reserve(playerList.size());

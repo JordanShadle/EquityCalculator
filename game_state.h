@@ -6,9 +6,9 @@ void printGame(const std::vector<std::vector<Card>>& playerList,
                const std::vector<HandValue>& playerValues,
                const std::vector<Card>& board);
 
-void calculateEquity(std::array<float, RESULT_SIZE> winCount);
+void calculateEquity(const std::vector<float>& winCount);
 
 void results(Deck deck,
              const std::vector<std::vector<Card>>& playerList,
-             std::array<float, RESULT_SIZE>& threadResults);
+             std::vector<float>& threadResults);
 

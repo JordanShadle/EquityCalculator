@@ -10,6 +10,7 @@ public:
     void shuffle();
     void deal(std::vector<Card>& spot, std::size_t cardsDealt);
     void getHoleCards(std::vector<std::vector<Card>>& playerList);
+    void reseed() { rng.seed(std::random_device{}()); }
 
 private:
     std::vector<Card> cards;
