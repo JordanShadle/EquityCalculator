@@ -80,6 +80,8 @@ void Deck::getHoleCards(std::vector<std::vector<Card>>& playerList)
                 if (currentCard.rank < 2 || currentCard.rank > 14)
                 {
                     std::cout << "Invalid rank: " << currentCard.rank << "\n";
+                    std::cin.ignore(
+                        std::numeric_limits<std::streamsize>::max(), '\n');
                     validInput = false;
                     break;
                 }
@@ -98,6 +100,8 @@ void Deck::getHoleCards(std::vector<std::vector<Card>>& playerList)
             {
                 std::cout << "Invalid suit: " <<
                 suitToChar(currentCard.suit) << "\n";
+                std::cin.ignore(
+                    std::numeric_limits<std::streamsize>::max(), '\n');
                 validInput = false;
                 break;
             }
