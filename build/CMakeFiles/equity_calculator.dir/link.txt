@@ -1,1 +1,0 @@
-/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/equity_calculator.dir/main.cpp.o CMakeFiles/equity_calculator.dir/deck.cpp.o CMakeFiles/equity_calculator.dir/hand.cpp.o CMakeFiles/equity_calculator.dir/utils.cpp.o CMakeFiles/equity_calculator.dir/game_state.cpp.o -o equity_calculator
