@@ -42,7 +42,7 @@ void Deck::getHoleCards(std::vector<std::vector<Card>>& playerList)
 {
     const std::size_t cardCount = playerList.size() * 2;
     Card currentCard{};
-    char currentChar;
+    std::string cardInput;
     std::vector<int> indexList;
     indexList.reserve(cardCount);
     
@@ -58,26 +58,46 @@ void Deck::getHoleCards(std::vector<std::vector<Card>>& playerList)
 
         for (size_t i{}; i < cardCount; ++i)
         {
-            std::cin >> currentChar;
-            currentCard.rank = charToRank(currentChar);
+            std::cin >> cardInput;
             
-            if (currentCard.rank == 0)
+            if (cardInput.size() < 2 || cardInput.size() > 3)
             {
-                std::cout << "Invalid rank\n";
-                std::cin.clear();
-                std::cin.ignore(10000, '\n');
+                std::cout << "Invalid card\n";
+                std::cin.ignore(
+                    std::numeric_limits<std::streamsize>::max(), '\n');
                 validInput = false;
                 break;
             }
             
-            std::cin >> currentChar;
-            currentCard.suit = charToSuit(currentChar);
+            if (cardInput[0] == '1' &&
+                (cardInput[1] >= '0' && cardInput[1] <= '4'))
+            {
+                currentCard.rank = 10 + (cardInput[1] - '0');
+            }
+            else
+            {
+                currentCard.rank = charToRank(cardInput[0]);
+                if (currentCard.rank < 2 || currentCard.rank > 14)
+                {
+                    std::cout << "Invalid rank: " << currentCard.rank << "\n";
+                    validInput = false;
+                    break;
+                }
+            }
+            
+            if (cardInput.size() == 2)
+            {
+                currentCard.suit = charToSuit(cardInput[1]);
+            }
+            else if (cardInput.size() == 3)
+            {
+                currentCard.suit = charToSuit(cardInput[2]);
+            }
             
             if (currentCard.suit == Suit::invalid_suit)
             {
-                std::cout << "Invalid suit\n";
-                std::cin.clear();
-                std::cin.ignore(10000, '\n');
+                std::cout << "Invalid suit: " <<
+                suitToChar(currentCard.suit) << "\n";
                 validInput = false;
                 break;
             }
@@ -88,9 +108,10 @@ void Deck::getHoleCards(std::vector<std::vector<Card>>& playerList)
             if (std::find(indexList.begin(), indexList.end(), cardIndex)
                 != indexList.end())
             {
-                std::cout << "Duplicate hole cards not allowed";
+                std::cout << "Duplicate hole cards not allowed\n";
                 std::cin.clear();
-                std::cin.ignore(10000, '\n');
+                std::cin.ignore(
+                    std::numeric_limits<std::streamsize>::max(), '\n');
                 validInput = false;
                 break;
             }

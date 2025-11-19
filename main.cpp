@@ -20,21 +20,21 @@ int main(int argc, const char * argv[]) {
         std::cout << "Enter number of players: ";
         if (std::cin >> numPlayers)
         {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             if (numPlayers >= 2 && numPlayers <= 9)
             {
                 break;
             }
             else
             {
-                std::cout << "Number of players must be 2 through 9\n"
-                << std::endl;
+                std::cout << "Number of players must be 2 through 9\n";
             }
         }
         else
         {
             std::cout << "Please enter a valid integer (2-9)\n";
             std::cin.clear();
-            std::cin.ignore(10000, '\n');
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
     

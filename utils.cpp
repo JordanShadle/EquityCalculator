@@ -61,7 +61,7 @@ int charToRank(char rank)
             return 10;
             break;
         default:
-            if (rank >= 2 && rank <= 9)
+            if (rank >= '2' && rank <= '9')
             {
                 return rank - '0';
             }
